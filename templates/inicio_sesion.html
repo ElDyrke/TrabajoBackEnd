@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8" />
+  <title>Iniciar Sesion</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+
+  <body>
+    {% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container px-5">
+        <a class="navbar-brand" href="{% url 'inicio' %}">Turismo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'inicio' %}">Principal</a></li>
+            <li class="nav-item"><a class="nav-link" href="#!">Acerca de Nosotros</a></li>
+            <li class="nav-item dropdown">
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#!">Horarios de Atención</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#!">Contacto</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'inicio_sesion' %}">Iniciar Sesión</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'registro_usuario' %}">Registrarse</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Carrito de Compras</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endblock navbar %}
+    <h2>Inicio de sesión</h2>
+    <form method="post" action="{% url 'inicio_sesion' %}">
+      {% csrf_token %}
+      <label for="username">Nombre de Usuario:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="id_contrasena">Contraseña:</label>
+      <input type="password" id="contrasenna" name="contrasenna" required>
+      <button type="submit">Iniciar sesión</button>
+    </form>    
+  
+    {% if error %}
+      <p style="color: red;">{{ error }}</p>
+    {% endif %}
+  </body>
+</html>
