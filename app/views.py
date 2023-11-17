@@ -11,19 +11,21 @@ def registro_usuario(request):
     if request.method == "GET":
         return render(request, "registro_usuario.html")
     elif request.method == "POST":
-        username = request.POST.get("username")
-        nombre = request.POST.get("nombre")
-        apellido = request.POST.get("apellido")
-        contrasenna = request.POST.get("contrasenna")
-        email = request.POST.get("email")
+        rut = request.POST["rut"]
+        username = request.POST["username"]
+        nombre = request.POST["nombre"]
+        apellido = request.POST["apellido"]
+        contrasenna = request.POST["contrasenna"]
+        email = request.POST["email"]
         nuevoRegistro = Usuario(username=username,
+                                rut=rut,
                                 nombre=nombre,
                                 apellido=apellido,
                                 contrasenna=contrasenna,
                                 email=email,
                                 tipo_usuario_id=1)
         
-        if nuevoRegistro is not None:
+        if nuevoRegistro:
             nuevoRegistro.save()
             messages.success(request, 'Registro exitoso. Por favor, inicia sesión.')
             return redirect('/inicio_sesion')

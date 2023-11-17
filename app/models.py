@@ -7,6 +7,7 @@ class TipoUsuario(models.Model):
 class Usuario(models.Model):
     username = models.CharField(max_length=50)
     nombre = models.CharField(max_length=50)
+    rut = models.CharField(max_length=10)
     apellido = models.CharField(max_length=50)
     contrasenna = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)

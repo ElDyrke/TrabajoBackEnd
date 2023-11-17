@@ -1,73 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="utf-8" />
-    <title>Registro de Usuario </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-</head>
-<body>
-    {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container px-5">
-            <a class="navbar-brand" href="{% url 'inicio' %}">Turismo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Navigation Items -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'inicio' %}">Principal</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">Acerca de Nosotros</a></li>
-                    <li class="nav-item dropdown">
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">Horarios de Atención</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="#!">Contacto</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'inicio_sesion' %}">Iniciar Sesión</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'registro_usuario' %}">Registrarse</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Viajes Reservados</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    {% endblock navbar %}
-    {%block content%}
+{% extends 'base.html' %}
 
-    <h1 class="display-2 font-weight-bold mt-5">Registro de Usuario</h1>
-    <form method='post' action="{% url 'registro_usuario' %}">
-      {% csrf_token %}
-        <div style="float:center;">
-        <div class="form-group">
-            <label class="font-weight-bold h3 alert alert alert-primary" role="alert">Nombre de Usuario
-            <input type="text" name="username" placeholder="Ej.12345678-9"></label>
+
+{% block content %}
+<div class="container p-4">
+    <div class="card">
+        <h1 class="card-header">Registro de Usuario</h1>
+        <div class="card-body">
+            <form method='post' action="{% url 'registro_usuario' %}">
+                {% csrf_token %}
+                <div class="row px-2 pb-2">
+                    <label class="form-label p-0">Nombre de Usuario</label>
+                    <input type="text" class="form-control" name="rut" placeholder="Ingrese Nombre de Usuario"></label>
+                </div>
+                <div class="row px-2 pb-2">
+                    <label class="form-label p-0" >Rut</label>
+                    <input type="text" class="form-control" name="username" placeholder="Ej: 12345678-9"></label>
+                </div>
+                <div class="row px-2 pb-2">
+                    <label class="form-label p-0">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre "></label>
+                </div>
+                <div class="row px-2 pb-2">
+                    <label class="form-label p-0">Apellido</label>
+                    <input type="text" class="form-control" name="apellido" placeholder="Ingrese apellido"></label>
+                </div>
+                <div class="row px-2 pb-2">
+                    <label class="form-label p-0">Contraseña</label>
+                    <input type="password" class="form-control" name="contrasenna" placeholder="Ingrese contraseña"></label>
+                </div>
+                <div class="row px-2 pb-2">
+                    <label class="form-label p-0">Correo Electrónico</label>
+                    <input type="text" class="form-control" name="email" placeholder="email@example-com"></label>
+                </div>
+                <div class="row px-2 pb-2 p-3 pb-1"><button type="submit" class="btn btn-dark btn-lg">Registrarse</button></div>
+            </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label class="font-weight-bold h3 alert alert-primary">Nombre
-            <input type="text" name="nombre" placeholder="Ingrese su nombre "></label>
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold h3 alert alert-primary">Apellido
-            <input type="text" name="apellido" placeholder="Ingrese apellido"></label>
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold h3 alert alert-primary">Contraseña
-            <input type="password" name="contrasenna" placeholder="Ingrese contraseña"></label>
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold h3 alert alert-primary">Correo Electrónico
-            <input type="text" name="email" placeholder="Ingrese su correo"></label>
-        </div>
-        <button type="submit" class="btn btn-primary btn-lg">Registrarse</button>
     </div>
-    </form>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    {%endblock content%}
-</body>
-</html> 
+</div>
+
+{% endblock content %}
+    
