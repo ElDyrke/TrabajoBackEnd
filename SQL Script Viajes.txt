@@ -1,0 +1,21 @@
+INSERT INTO app_Destino (nombre, html_src)
+VALUES
+    ('Santiago', 'https://www.santiago.cl/'),
+    ('Valparaíso', 'https://www.valparaiso.cl/'),
+    ('Puerto Varas', 'https://www.puertovaras.cl/'),
+    ('San Pedro de Atacama', 'https://www.sanpedroatacama.com/'),
+    ('Pucón', 'https://www.visitpucon.com/');
+
+
+INSERT INTO app_Viaje (titulo, descripcion, stock, precio, destino_id)
+VALUES 
+    ('Viaje 1', 'Descripcion 1', 20, 500, 1),
+    ('Viaje 2', 'Descripcion 2', 15, 750, 2),
+    ('Viaje 3', 'Descripcion 3', 10, 600, 3),
+    ('Viaje 4', 'Descripcion 4', 25, 800, 4),
+    ('Viaje 5', 'Descripcion 5', 8, 1200, 5),
+    ('Viaje 6', 'Descripcion 6', 18, 1000, 1),
+    ('Viaje 7', 'Descripcion 7', 12, 900, 2),
+    ('Viaje 8', 'Descripcion 8', 7, 1500, 3),
+    ('Viaje 9', 'Descripcion 9', 14, 1100, 3),
+    ('Viaje 10', 'Descripcion 10', 10, 1300, 1);
