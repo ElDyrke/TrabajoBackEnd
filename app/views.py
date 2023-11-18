@@ -4,8 +4,11 @@ from django.contrib import messages
 
 
 def inicio(request):
-    viajes = Viaje.objects.all()
-    return render(request, "inicio.html", {"viajes": viajes})
+    if request.session.get("usuario"):
+        viajes = Viaje.objects.all()
+        return render(request, "inicio.html", {"viajes": viajes})
+    else:
+        return render(request, "inicio_sesion.html")
 
 def registro_usuario(request):
     if request.method == "GET":
@@ -67,8 +70,13 @@ def cerrar_sesion(request):
 
 def viajes_reservados(request, id):
     # si carrito_cantidad no existe, entonces se inicia en 0
-    cantidad = request.session.get("carrito_cantidad", 0)
-    request.session["carrito_cantidad"] = cantidad + 1
+    getViaje = Viaje.objects.get(id=id)
+
+    if getViaje.stock > 0:
+        cantidad = request.session.get("carrito_cantidad", 0)
+        request.session["carrito_cantidad"] = cantidad + 1
+        getViaje.stock = getViaje.stock - 1; 
+        getViaje.save()
     #aqui se retorna un render
     return inicio(request)
 
