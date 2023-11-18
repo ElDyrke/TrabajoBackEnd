@@ -32,7 +32,7 @@ def registro_usuario(request):
         if nuevoRegistro:
             nuevoRegistro.save()
             messages.success(request, 'Registro exitoso. Por favor, inicia sesión.')
-            return redirect('/inicio_sesion')
+            return redirect('inicio_sesion')
         else:
             messages.error(request, 'Error en el formulario. Verifica los datos ingresados.')
             return render(request, 'registro_usuario.html')
@@ -57,16 +57,16 @@ def inicio_sesion(request):
 
             request.session["usuario"] = getUsername
             print(f"El usuario {getUsername} ha iniciado sesión.")
-            return render(request, "cliente.html", {'username':getUsername})
+            return redirect('cliente')
         
 
         elif autenticar(usuario, "Administrador", getContrasenna):
             request.session["administrador"] = getUsername
             print(f"El administrador {getUsername} ha iniciado sesión.")
-            return render(request, "administrador.html", {'username':getUsername})
+            return redirect('administrador')
 
         else:
-            
+
             error_message = "Error. Verifique que haya ingresado correctamente los datos"
             print("Error. Verifique que haya ingresado correctamente los datos")
             return render(request, "inicio_sesion.html", {"error_message": error_message})
@@ -86,8 +86,30 @@ def viajes_reservados(request, id):
     #aqui se retorna un render
     return inicio(request)
 
+def cerrar_sesion(request):
+    sesion = request.session
+    try:
+        if sesion["username"]:
+            del sesion["username"]
+    except:
+        if sesion["administrador"]:
+            del sesion["administrador"]
+
+    return redirect('inicio')
+
 def cliente(request):
-    return render(request, "cliente.html")
+    username = request.session["username"]
+    if username:
+        return render(request, "cliente.html", {"username": username})
+    else:
+        redirect('inicio_sesion')
 
 def administrador(request):
-    return render(request, "administrador.html")
+    username = request.session["administrador"]
+    if username:
+        return render(request, "administrador.html", {"username": username})
+    else:
+        redirect('inicio_sesion')
+
+def destinos(request):
+    return render(request, 'destinos.html')

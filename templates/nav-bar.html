@@ -14,10 +14,22 @@
                 <li class="nav-item"><a class="nav-link" href="#!">Nosotros</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">Contacto</a></li>
                 {% comment %} Eliminar si esta logeado {% endcomment %}
+                
+                {% if request.session.username or request.session.administrador %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'cerrar' %}">Cerrar Sesion</a></li>
+                
+                {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'inicio_sesion' %}">Iniciar Sesión</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'registro_usuario' %}">Registrarse</a></li>
-                {% comment %} deberia aparecer solo si esta logeado {% endcomment %}
+                
+                {% endif %}
+                    
+                
+                {% if request.session.username %}
                 <li class="nav-item"><a class="nav-link" href="#">Viajes Reservados</a></li>
+                {% endif %}
+                    
+                
             </ul>
         </div>
     </div>
