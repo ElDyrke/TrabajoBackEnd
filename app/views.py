@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from app.models import Usuario, Viaje
+from app.models import TipoUsuario, Usuario, Viaje
 from django.contrib import messages
 
 
@@ -23,7 +23,7 @@ def registro_usuario(request):
                                 apellido=apellido,
                                 contrasenna=contrasenna,
                                 email=email,
-                                tipo_usuario_id=1)
+                                tipo_usuario=TipoUsuario.objects.get(id=1))
         
         if nuevoRegistro:
             nuevoRegistro.save()
@@ -43,14 +43,14 @@ def inicio_sesion(request):
         #si con filter no se encuentra el username ni contrasena buscada, entonces devuelve None.
         usuario = Usuario.objects.filter(username=getUsername, contrasenna=getContrasenna).first()
 
-        if usuario and usuario.tipo_usuario_id==1:
+        if usuario and usuario.tipo_usuario.id ==1:
             #si tipo_usuario_id == 1 , entonces se inicia como usuario.
             # Para agregar un valor dentro de la SESSION, lo hacemos como si fuera un diccionario
             request.session["usuario"] = getUsername
             print(f"El usuario {getUsername} ha iniciado sesión.")
             return render(request, "cliente.html", {'username':getUsername})
         
-        elif usuario and usuario.tipo_usuario_id==2:
+        elif usuario and usuario.tipo_usuario.id==2:
             # Para agregar un valor dentro de la SESSION, lo hacemos como si fuera un diccionario
             request.session["administrador"] = getUsername
             print(f"El administrador {getUsername} ha iniciado sesión.")
