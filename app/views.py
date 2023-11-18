@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from app.models import TipoUsuario, Usuario, Viaje
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password, check_password
 
 
 def inicio(request):
@@ -18,7 +19,7 @@ def registro_usuario(request):
         username = request.POST["username"]
         nombre = request.POST["nombre"]
         apellido = request.POST["apellido"]
-        contrasenna = request.POST["contrasenna"]
+        contrasenna = make_password(request.POST["contrasenna"])
         email = request.POST["email"]
         nuevoRegistro = Usuario(username=username,
                                 rut=rut,
@@ -36,31 +37,36 @@ def registro_usuario(request):
             messages.error(request, 'Error en el formulario. Verifica los datos ingresados.')
             return render(request, 'registro_usuario.html')
 
+def autenticar(usuario, rol, pswrd):
+    return usuario and usuario.tipo_usuario.nombre == rol and check_password(pswrd, usuario.contrasenna)
+
 def inicio_sesion(request):
     if request.method == "GET":
         return render(request, "inicio_sesion.html")
     
     elif request.method == "POST":
-        getUsername = request.POST.get('username')
-        getContrasenna = request.POST.get('contrasenna')
+        getUsername = request.POST['username']
+        getContrasenna = request.POST['contrasenna']
         #si con filter no se encuentra el username ni contrasena buscada, entonces devuelve None.
-        usuario = Usuario.objects.filter(username=getUsername, contrasenna=getContrasenna).first()
+        usuario = Usuario.objects.filter(username=getUsername).first()
 
-        if usuario and usuario.tipo_usuario.id ==1:
-            #si tipo_usuario_id == 1 , entonces se inicia como usuario.
-            # Para agregar un valor dentro de la SESSION, lo hacemos como si fuera un diccionario
+        # print(f"usuario: {usuario.username} {usuario.tipo_usuario.nombre}")
+        # print(f"{check_password(getContrasenna, usuario.contrasenna)}")
+
+        if autenticar(usuario, "Usuario", getContrasenna):
+
             request.session["usuario"] = getUsername
             print(f"El usuario {getUsername} ha iniciado sesión.")
             return render(request, "cliente.html", {'username':getUsername})
         
-        elif usuario and usuario.tipo_usuario.id==2:
-            # Para agregar un valor dentro de la SESSION, lo hacemos como si fuera un diccionario
+
+        elif autenticar(usuario, "Administrador", getContrasenna):
             request.session["administrador"] = getUsername
             print(f"El administrador {getUsername} ha iniciado sesión.")
             return render(request, "administrador.html", {'username':getUsername})
 
         else:
-            # Enviar un mensaje de error si no se proporciona un nombre de usuario
+            
             error_message = "Error. Verifique que haya ingresado correctamente los datos"
             print("Error. Verifique que haya ingresado correctamente los datos")
             return render(request, "inicio_sesion.html", {"error_message": error_message})

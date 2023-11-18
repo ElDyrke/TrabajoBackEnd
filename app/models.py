@@ -9,7 +9,7 @@ class Usuario(models.Model):
     nombre = models.CharField(max_length=50)
     rut = models.CharField(max_length=10)
     apellido = models.CharField(max_length=50)
-    contrasenna = models.CharField(max_length=50)
+    contrasenna = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)
     tipo_usuario = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
 
