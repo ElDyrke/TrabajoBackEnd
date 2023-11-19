@@ -26,3 +26,11 @@ class FormCotizacion(forms.ModelForm):
     class Meta:
         model = Cotizacion
         fields = '__all__'
+
+class FormUsuarioUsername(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['id', 'username']
+        widgets = {
+            'id': forms.HiddenInput(),
+        }

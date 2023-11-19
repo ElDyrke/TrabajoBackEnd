@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base-admin.html' %}
 
 {% block content %}
-<h1 class="h1 text-center py-4">Bienvenido, {{username}}</h1>
+<h1 class="h1 text-center py-4">Bienvenido, administrador: {{username}}</h1>
 <div class="card m-5">
     <div class="container">
         <div class="card-body">
@@ -33,6 +33,11 @@
                 <div class="row">
                     <a href="{% url 'formreservas' %}">
                         <button type="button" class="btn btn-outline-dark btn-lg w-100">Reservas</button>
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="{% url 'formUsuarioUsername' %}">
+                        <button type="button" class="btn btn-outline-dark btn-lg w-100">Editar Usuarios</button>
                     </a>
                 </div>
             </div>

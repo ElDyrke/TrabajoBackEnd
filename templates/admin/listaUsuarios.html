@@ -1,0 +1,22 @@
+{% extends 'base-admin.html' %}
+
+{% block content %}
+    <h1 class="h1 bg-light text-center p-3">Lista de Usuarios</h1>
+    <div class="container">
+        <div class="card mb-3">
+            <div class="card-body">
+                <form action="{% url 'formUsuarioUsername' %}" method="post">
+                    {% csrf_token %}
+                        {{ form.errors }}
+                        {% for field in form %}
+                            {{ field.label_tag }} {{ field }}
+                        {% endfor %}
+                        <a href="{% url 'editarUsuarios' id=form.instance.id %}">
+                            <div class="row mx-5"><button type="submit" class="btn btn-outline-dark">Editar</button></div>
+                        </a>
+                </form>   
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    

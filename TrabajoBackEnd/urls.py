@@ -16,5 +16,6 @@ urlpatterns = [
     path('agregarcotizaciones/', views.formcotizaciones, name="formcotizaciones"),
     path('cerrar/', views.cerrar_sesion, name="cerrar"),
     path('viajes_reservados/<int:id>', views.viajes_reservados, name="viajes_reservados"),
-    
+    path('editarUsuarios/<int:id>', views.editarUsuarios, name="editarUsuarios"),
+    path('listaUsuarios/', views.formUsuarioUsername, name="formUsuarioUsername"),
 ]
