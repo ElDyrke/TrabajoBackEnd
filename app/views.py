@@ -8,16 +8,13 @@ from django.views.decorators.cache import never_cache
 
 
 def inicio(request):
-    try:
-        if request.session["usuario"]:
-            viajes = Viaje.objects.all()
-            return render(request, "inicio.html", {"viajes": viajes})
-    except:
-        try:
-            if request.session["administrador"]:
-                return redirect('administrador')
-        except:
-            return redirect('inicio_sesion')
+    sesion = request.session
+   
+    if "administrador" in sesion:
+        return redirect('administrador')
+    else:
+        viajes = Viaje.objects.all()
+        return render(request, "cliente.html", {"viajes": viajes})
    
 
 def registro_usuario(request):
@@ -106,6 +103,7 @@ def cerrar_sesion(request):
     try:
         if "username" in sesion:
             del sesion["username"]
+            del sesion["viajes"]
         elif "administrador" in sesion:
             del sesion["administrador"]
         return redirect('inicio_sesion')
@@ -129,8 +127,24 @@ def vista_viaje(request, id):
     context = {"viaje": viaje}
     return render(request, 'viaje_vista.html', context)
 
+def add_to_cotizacion(request,id):
+    viaje = Viaje.objects.get(id = id).id
+    
+    try:
+        if viaje not in request.session["viajes"]:
+            lista = request.session["viajes"]
+            lista.append(viaje)
+            request.session["viajes"] = lista
+    except KeyError:
+        request.session["viajes"] = [viaje]
+
+    print(request.session["viajes"])
+
+    return redirect('inicio')
+    
+    
 def administrador(request):
-    return render(request, "administrador.html", {"username": request.user.username})
+    return render(request, "administrador.html", {"username": request.session["administrador"]})
 
 
 def formusuarios(request):
@@ -217,7 +231,7 @@ def editarUsuarios(request,id):
 
     if request.method == 'POST':
         formulario = FormUsuario(request.POST, instance=usuario)
-        formulario.tipo_usuario_id = 1;
+        formulario.tipo_usuario_id = 1
         if formulario.is_valid():
             print(formulario)
             formulario.save()

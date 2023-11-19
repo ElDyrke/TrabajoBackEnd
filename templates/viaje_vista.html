@@ -16,7 +16,7 @@
                     <p class="text-body-emphasis">Precio: {{viaje.precio}}; Stock: {{viaje.stock}}</p>
                 </div>
                 <div class="row">
-                    <a href=""><button class="btn btn-dark btn-lg">Añadir a cotizacion</button></a>
+                    <a href="{% url 'add_to_cotizacion' viaje.id %}"><button class="btn btn-dark btn-lg">Añadir a cotizacion</button></a>
                 </div>
             </div>
         </div>
