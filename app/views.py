@@ -40,7 +40,7 @@ def registro_usuario(request):
                                 apellido=apellido,
                                 contrasenna=make_password(contrasenna),
                                 email=email,
-                                tipo_usuario=TipoUsuario.objects.get(id=1))
+                                tipo_usuario=TipoUsuario.objects.get(id=2))
         
         if nuevoRegistro:
             nuevoRegistro.save()
@@ -65,7 +65,7 @@ def inicio_sesion(request):
 
         print(autenticar(usuario, "Cliente", getContrasenna))
         if usuario is not None:
-            if autenticar(usuario, "Cliente", getContrasenna):
+            if autenticar(usuario, "Usuario", getContrasenna):
 
                 request.session["username"] = getUsername
                 print(f"El usuario {getUsername} ha iniciado sesión.")
