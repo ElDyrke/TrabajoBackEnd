@@ -28,6 +28,11 @@
                 {% if request.session.username %}
                 <li class="nav-item"><a class="nav-link" href="#">Viajes Reservados</a></li>
                 {% endif %}
+                
+                
+                {% if request.session.viajes %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'usuario_cotizar' %}">Enviar Cotizacion</a></li>
+                {% endif %}
                     
                 
             </ul>

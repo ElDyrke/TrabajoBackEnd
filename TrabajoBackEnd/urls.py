@@ -19,5 +19,6 @@ urlpatterns = [
     path('editarUsuarios/<int:id>', views.editarUsuarios, name="editarUsuarios"),
     path('listaUsuarios/', views.formUsuarioUsername, name="formUsuarioUsername"),
     path('vista_viaje/<int:id>', views.vista_viaje, name="vista_viaje"),
-    path('add_cotizacion/<int:id>', views.add_to_cotizacion, name='add_to_cotizacion')
+    path('add_cotizacion/<int:id>', views.add_to_cotizacion, name='add_to_cotizacion'),
+    path('usuario_cotizar', views.usuario_cotizar, name="usuario_cotizar")
 ]

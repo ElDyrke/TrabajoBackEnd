@@ -42,9 +42,6 @@ class Cotizacion(models.Model):
     fecha_minima = models.DateTimeField(auto_now=False, auto_now_add=False)
     fecha_maxima = models.DateTimeField(auto_now=False, auto_now_add=False)
 
-    def __str__(self):
-        return self.nombre
-
 class Reserva(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     viaje = models.ForeignKey(Viaje, on_delete=models.CASCADE)

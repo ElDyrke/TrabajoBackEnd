@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container flex-wrap">
+        <div class="card m-4">
+            <div class="card-header">
+                <h2 class="h2">Cotizacion</h2>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <h3 class="h3">Viajes seleccionados</h3>
+                </div>
+                <div class="row mb-2 border-bottom">
+                    
+                    {% for viaje in viajes %}
+                        <div class="col bg-dark-subtle mx-2 mb-2">
+                            <p>{{viaje.titulo}}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row mb-2 text-center">
+                    <p>Ingrese su rango de fechas preferido</p>
+                </div>
+                <form action="{% url 'usuario_cotizar' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row mb-2 border-bottom">
+                        <div class="col mb-2">
+                            <label for="fecha_min">Fecha Minima:</label>
+                            <input type="date" name="fecha_min" id="fecha_min" class="form-control">
+                        </div>
+                        <div class="col mb-2">
+                            <label for="fecha_max">Fecha Máxima</label>
+                            <input type="date" name="fecha_max" id="fecha_max" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p class="text-danger">{{error}}</p>
+                    </div>
+                    <div class="row mx-2 ">
+                        <button type="submit" class="btn btn-outline-dark py-lg-4">Enviar Cotizacion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    

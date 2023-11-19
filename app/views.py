@@ -142,7 +142,41 @@ def add_to_cotizacion(request,id):
 
     return redirect('inicio')
     
+def usuario_cotizar(request):
+    if request.method == "GET":
+        sesion = request.session
+        if "username" not in sesion:
+            return redirect('inicio_sesion')
+        
+        viajes = []
+        for id_viaje in request.session["viajes"]:
+            viaje = Viaje.objects.get(id = id_viaje)
+            viajes.append(viaje)
+
+        context = {"viajes": viajes}
+        return render(request, 'usuario_cotizar.html', context)
     
+    elif request.method == "POST":
+        sesion = request.session
+        viajes = sesion["viajes"]
+        usuario = Usuario.objects.get(username = sesion["username"])
+        fecha_min = request.POST["fecha_min"]
+        fecha_max = request.POST["fecha_max"]
+
+        if fecha_min > fecha_max:
+            return render(request, 'usuario_cotizar.html', {"error": "La fecha Minima no puede ser Mayor a la Máxima"})
+        
+        cotizacion = Cotizacion(usuario=usuario,
+                                fecha_minima=fecha_min,
+                                fecha_maxima=fecha_max)
+        cotizacion.save()
+        for v in viajes:
+            cotizacion.viajes.add(v)
+        cotizacion.save()
+        del sesion["viajes"]
+        return redirect('inicio')
+
+
 def administrador(request):
     return render(request, "administrador.html", {"username": request.session["administrador"]})
 
