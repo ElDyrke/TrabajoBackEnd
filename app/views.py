@@ -69,13 +69,13 @@ def inicio_sesion(request):
 
                 request.session["username"] = getUsername
                 print(f"El usuario {getUsername} ha iniciado sesión.")
-                return render(request, "cliente.html", {'username': getUsername})
+                return redirect('cliente')
             
 
             elif autenticar(usuario, "Administrador", getContrasenna):
                 request.session["administrador"] = getUsername
                 print(f"El administrador {getUsername} ha iniciado sesión.")
-                return render(request, 'administrador.html', {'username': getUsername})
+                return redirect('administrador')
 
             else:
                 error_message = "Error. Verifique que haya ingresado correctamente los datos"
@@ -119,7 +119,10 @@ def es_administrador(user):
 
 
 def cliente(request):
-    return render(request, "cliente.html", {"username": request.user.username})
+    viajes = Viaje.objects.all()
+    print(viajes)
+    context = {"viajes": viajes, "username": request.session["username"]}
+    return render(request,'cliente.html', context)
 
 def administrador(request):
     return render(request, "administrador.html", {"username": request.user.username})
