@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="h1 bg-light text-center p-3">Agregar Cotizacion</h1>
+    <div class="container">
+        <div class="card mb-3">
+            <div class="card-body">
+                
+                <form action="{% url 'formcotizaciones' %}" method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="row mb-3 mx-5">
+                            {{field.errors}}
+                            {{field.label_tag}} {{field}}
+                        </div>
+                        
+                        
+                            
+                    {% endfor %}
+                    <div class="row mx-5"><button type="submit" class="btn btn-outline-dark">Agregar</button></div>
+                </form>
+                    
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}
+    

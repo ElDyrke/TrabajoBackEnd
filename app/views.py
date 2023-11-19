@@ -1,15 +1,22 @@
 from django.shortcuts import render, redirect
+from app.forms import *
 from app.models import TipoUsuario, Usuario, Viaje
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 
 
 def inicio(request):
-    if request.session.get("usuario"):
-        viajes = Viaje.objects.all()
-        return render(request, "inicio.html", {"viajes": viajes})
-    else:
-        return render(request, "inicio_sesion.html")
+    try:
+        if request.session["usuario"]:
+            viajes = Viaje.objects.all()
+            return render(request, "inicio.html", {"viajes": viajes})
+    except:
+        try:
+            if request.session["administrador"]:
+                return redirect('administrador')
+        except:
+            return redirect('inicio_sesion')
+   
 
 def registro_usuario(request):
     if request.method == "GET":
@@ -111,5 +118,51 @@ def administrador(request):
     else:
         redirect('inicio_sesion')
 
-def destinos(request):
-    return render(request, 'destinos.html')
+def formusuarios(request):
+    if request.method == "GET":
+        form = FormUsuario()
+        return render(request, 'agregarUsuarios.html', {"form": form})
+    elif request.method == "POST":
+        form = FormUsuario(request.POST)
+        if form.is_valid():
+            form.save()
+        return render(request, 'agregarUsuarios.html', {"form": form})
+        
+def formdestinos(request):
+    if request.method == "GET":
+        form = FormDestino()
+        return render(request, 'agregarDestino.html', {"form": form})
+    elif request.method == "POST":
+        form = FormDestino(request.POST)
+        if form.is_valid():
+            form.save()
+        return render(request, 'agregarDestino.html', {"form": form})
+def formviajes(request):
+    if request.method == "GET":
+        form = FormViaje()
+        return render(request, 'agregarViaje.html', {"form": form})
+    elif request.method == "POST":
+        form = FormViaje(request.POST)
+        if form.is_valid():
+            form.save()
+        return render(request, 'agregarViaje.html', {"form": form})
+    
+def formreservas(request):
+    if request.method == "GET":
+        form = FormReserva()
+        return render(request, 'agregarReserva.html', {"form": form})
+    elif request.method == "POST":
+        form = FormReserva(request.POST)
+        if form.is_valid():
+            form.save()
+        return render(request, 'agregarReserva.html', {"form": form})
+    
+def formcotizaciones(request):
+    if request.method == "GET":
+        form = FormCotizacion()
+        return render(request, 'agregarCotizacion.html', {"form": form})
+    elif request.method == "POST":
+        form = FormCotizacion(request.POST)
+        if form.is_valid():
+            form.save()
+        return render(request, 'agregarCotizacion.html', {"form": form})

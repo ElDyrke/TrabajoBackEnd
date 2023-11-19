@@ -9,7 +9,12 @@ urlpatterns = [
     path('cerrar_sesion/', views.cerrar_sesion, name="cerrar_sesion"),
     path('cliente/', views.cliente, name="cliente"),
     path('administrador/', views.administrador, name="administrador"),
-    path('administrador/destinos', views.destinos, name="destinos"),
+    path('agregarUsuarios/', views.formusuarios, name="formusuarios"),
+    path('agregardestinos/', views.formdestinos, name="formdestinos"),
+    path('agregarviajes/', views.formviajes, name="formviajes"),
+    path('agregarreservas/', views.formreservas, name="formreservas"),
+    path('agregarcotizaciones/', views.formcotizaciones, name="formcotizaciones"),
     path('cerrar/', views.cerrar_sesion, name="cerrar"),
     path('viajes_reservados/<int:id>', views.viajes_reservados, name="viajes_reservados"),
+    
 ]
