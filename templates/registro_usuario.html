@@ -8,6 +8,7 @@
         <div class="card-body">
             <form method='post' action="{% url 'registro_usuario' %}">
                 {% csrf_token %}
+                <p style = "color: red;">{{error}}</p>
                 <div class="row px-2 pb-2">
                     <label class="form-label p-0">Nombre de Usuario</label>
                     <input type="text" class="form-control" name="username" placeholder="Ingrese Nombre de Usuario"></label>
@@ -27,6 +28,10 @@
                 <div class="row px-2 pb-2">
                     <label class="form-label p-0">Contraseña</label>
                     <input type="password" class="form-control" name="contrasenna" placeholder="Ingrese contraseña"></label>
+                </div>
+                <div class="row px-2 pb-2">
+                    <label class="form-label p-0">Confirmar Contraseña</label>
+                    <input type="password" class="form-control" name="contrasenna2" placeholder="Confirme su contraseña"></label>
                 </div>
                 <div class="row px-2 pb-2">
                     <label class="form-label p-0">Correo Electrónico</label>

@@ -28,13 +28,17 @@ def registro_usuario(request):
         username = request.POST["username"]
         nombre = request.POST["nombre"]
         apellido = request.POST["apellido"]
-        contrasenna = make_password(request.POST["contrasenna"])
+        contrasenna = request.POST["contrasenna"]
+        contrasenna2 = request.POST["contrasenna2"]
         email = request.POST["email"]
+        if contrasenna != contrasenna2: 
+            messages.error(request, 'Las contraseñas no coinciden')
+            return render(request, 'registro_usuario.html', {"error": 'Las contraseñas no coinciden'})
         nuevoRegistro = Usuario(username=username,
                                 rut=rut,
                                 nombre=nombre,
                                 apellido=apellido,
-                                contrasenna=contrasenna,
+                                contrasenna=make_password(contrasenna),
                                 email=email,
                                 tipo_usuario=TipoUsuario.objects.get(id=1))
         
@@ -44,15 +48,10 @@ def registro_usuario(request):
             return redirect('inicio_sesion')
         else:
             messages.error(request, 'Error en el formulario. Verifica los datos ingresados.')
-            return render(request, 'registro_usuario.html')
+            return render(request, 'registro_usuario.html', {"error": 'Error en el formulario. Verifica los datos ingresados.'})
 
 def autenticar(usuario, rol, pswrd):
-    print("pswrd:", pswrd)
-    print("usuario.contrasenna:", usuario.contrasenna)
-    print("check_password result:", check_password(pswrd, usuario.contrasenna))
-
-    # No se por que check_password retorna Falso. Revisar
-    return usuario and usuario.tipo_usuario and usuario.tipo_usuario.nombre == rol #and check_password(pswrd,usuario.contrasenna)
+    return usuario and usuario.tipo_usuario and usuario.tipo_usuario.nombre == rol and check_password(pswrd,usuario.contrasenna)
 
 def inicio_sesion(request):
     if request.method == "GET":
@@ -62,10 +61,9 @@ def inicio_sesion(request):
         getUsername = request.POST['username']
         getContrasenna = request.POST['contrasenna']
         #si con filter no se encuentra el username ni contrasena buscada, entonces devuelve None.
-        usuario = Usuario.objects.filter(username=getUsername, contrasenna=getContrasenna).first()
+        usuario = Usuario.objects.filter(username=getUsername).first()
 
-        # print(f"usuario: {usuario.username} {usuario.tipo_usuario.nombre}")
-        # print(f"{check_password(getContrasenna, usuario.contrasenna)}")
+        print(autenticar(usuario, "Cliente", getContrasenna))
         if usuario is not None:
             if autenticar(usuario, "Cliente", getContrasenna):
 
