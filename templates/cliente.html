@@ -4,15 +4,25 @@
 
         <div class="container flex-wrap">
             <div class="row">
-                
+
                 {% for viaje in viajes %}
                     <div class="col-sm-6 col-md-3">
                         <div class="card mb-3">
-                            <div class="card-header">
-                                {{viaje.titulo}}
-                            </div>
+                            <a style="color: black; text-decoration: none;" class="btn btn-light p-0 m-0" href="{% url 'vista_viaje' viaje.id %}">
+                                <div class="card-header">
+                                    <div class="row pt-2">
+                                        <div class="col">
+                                            <h3 class="h3 text-start">{{viaje.titulo}}</h3>
+                                        </div>
+                                        <div class="col">
+                                            <p class="text-end text-md-start">Cupos {{viaje.stock}}</p>
+                                            <p class="text-end text-md-start px-1 text-black-50">{{viaje.precio}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
                             <div class="card-body">
-                                {{viaje.descripcion}}
+                                <p>{{viaje.descripcion}}</p>
                             </div>
                         </div>
                     </div>

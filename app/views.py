@@ -124,6 +124,11 @@ def cliente(request):
     context = {"viajes": viajes, "username": request.session["username"]}
     return render(request,'cliente.html', context)
 
+def vista_viaje(request, id):
+    viaje = Viaje.objects.get(id = id)
+    context = {"viaje": viaje}
+    return render(request, 'viaje_vista.html', context)
+
 def administrador(request):
     return render(request, "administrador.html", {"username": request.user.username})
 
@@ -160,7 +165,6 @@ def formviajes(request):
             form.save()
         return render(request, 'agregarViaje.html', {"form": form})
 
-
 def formreservas(request):
     if request.method == "GET":
         form = FormReserva()
@@ -170,8 +174,6 @@ def formreservas(request):
         if form.is_valid():
             form.save()
         return render(request, 'agregarReserva.html', {"form": form})
-    
-
 
 def formcotizaciones(request):
     if request.method == "GET":

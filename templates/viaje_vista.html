@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card m-3">
+            <div class="card-header">
+                <a target="_blank" href={{viaje.destino.html_src}} style="text-decoration: none;">
+                    <h2 class="h2 text-black">{{viaje.titulo}}</h2>
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <p class="text-body">{{viaje.descripcion}}</p>
+                </div>
+                <div class="row">
+                    <p class="text-body-emphasis">Precio: {{viaje.precio}}; Stock: {{viaje.stock}}</p>
+                </div>
+                <div class="row">
+                    <a href=""><button class="btn btn-dark btn-lg">Añadir a cotizacion</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    
