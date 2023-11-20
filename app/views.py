@@ -114,6 +114,56 @@ def editarUsuarios(request,id):
         if formulario.is_valid():
             formulario.save()
         return redirect('listaUsuarios')
+    
+def editarDestinos(request,id):
+    destino = Destino.objects.get(id=id)
+    if request.method == 'GET':
+        formulario = FormDestino(instance=destino)
+
+        return render(request, 'editarDestinos.html',  {"form":formulario, "id": id})
+    elif request.method == 'POST':
+        formulario = FormDestino(request.POST, instance=destino)
+        if formulario.is_valid():
+            formulario.save()
+        return redirect('listaDestinos')
+    
+def editarViajes(request,id):
+    viaje = Viaje.objects.get(id=id)
+    if request.method == 'GET':
+        formulario = FormViaje(instance=viaje)
+
+        return render(request, 'editarViajes.html',  {"form":formulario, "id": id})
+    elif request.method == 'POST':
+        formulario = FormViaje(request.POST, instance=viaje)
+        if formulario.is_valid():
+            formulario.save()
+        return redirect('listaViajes')
+
+
+def editarCotizaciones(request,id):
+    cotizacion = Cotizacion.objects.get(id=id)
+    if request.method == 'GET':
+        formulario = FormCotizacion(instance=cotizacion)
+
+        return render(request, 'editarCotizaciones.html',  {"form":formulario, "id": id})
+    elif request.method == 'POST':
+        formulario = FormCotizacion(request.POST, instance=cotizacion)
+        if formulario.is_valid():
+            formulario.save()
+        return redirect('listaCotizaciones')
+    
+def editarReservas(request,id):
+    reserva = Reserva.objects.get(id=id)
+    if request.method == 'GET':
+        formulario = FormReserva(instance=reserva)
+
+        return render(request, 'editarReservas.html',  {"form":formulario, "id": id})
+    elif request.method == 'POST':
+        formulario = FormReserva(request.POST, instance=reserva)
+        if formulario.is_valid():
+            formulario.save()
+        return redirect('listaReservas')
+    
 
 def eliminarUsuarios(request, id):
     usuario = Usuario.objects.get(id=id)
