@@ -9,55 +9,61 @@
                 <div class="row mb-3">
                     <div class="col">
                         <a href="{% url 'formviajes' %}">
-                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Viajes</button>
+                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Agregar Viajes</button>
                         </a>
                     </div>
                     <div class="col">
                         <a href="{% url 'formdestinos' %}">
-                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Destinos</button>
+                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Agregar Destinos</button>
                         </a>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col">
                         <a href="{% url 'formusuarios' %}">
-                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Usuarios</button>
+                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Agregar Usuarios</button>
                         </a>
                     </div>
                     <div class="col">
                         <a href="{% url 'formcotizaciones' %}">
-                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Cotizaciones</button>
+                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Agregar Cotizaciones</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 border-bottom">
+                    <div class="col mb-4">
+                        <a href="{% url 'formreservas' %}">
+                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Agregar Reservas</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <a href="{% url 'listaUsuarios' %}">
+                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Ver Usuarios</button>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="{% url 'listaViajes' %}">
+                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Ver Viajes</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <a href="{% url 'listaDestinos' %}">
+                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Ver Destinos</button>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="{% url 'listaCotizaciones' %}">
+                            <button type="button" class="btn btn-outline-dark btn-lg w-100">Ver Cotizaciones</button>
                         </a>
                     </div>
                 </div>
                 <div class="row">
-                    <a href="{% url 'formreservas' %}">
-                        <button type="button" class="btn btn-outline-dark btn-lg w-100">Reservas</button>
-                    </a>
-                </div>
-                <div class="row">
-                    <a href="{% url 'listaUsuarios' %}">
-                        <button type="button" class="btn btn-outline-dark btn-lg w-100">Editar Usuarios</button>
-                    </a>
-                </div>
-                <div class="row">
-                    <a href="{% url 'listaViajes' %}">
-                        <button type="button" class="btn btn-outline-dark btn-lg w-100">Editar Viajes</button>
-                    </a>
-                </div>
-                <div class="row">
-                    <a href="{% url 'listaDestinos' %}">
-                        <button type="button" class="btn btn-outline-dark btn-lg w-100">Editar Destinos</button>
-                    </a>
-                </div>
-                <div class="row">
-                    <a href="{% url 'listaCotizaciones' %}">
-                        <button type="button" class="btn btn-outline-dark btn-lg w-100">Editar Cotizaciones</button>
-                    </a>
-                </div>
-                <div class="row">
                     <a href="{% url 'listaReservas' %}">
-                        <button type="button" class="btn btn-outline-dark btn-lg w-100">Editar Reservas</button>
+                        <button type="button" class="btn btn-outline-dark btn-lg w-100">Ver Reservas</button>
                     </a>
                 </div>
             </div>

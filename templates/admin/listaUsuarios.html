@@ -1,35 +1,37 @@
 {% extends 'base-admin.html' %}
 
 {% block content %}
-    <h1 class="mb-2 text-center bg-dark text-white">Lista de Usuarios</h1>
-    <table class="table text-center table-dark table-hover">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">RUT</th>
-                <th scope="col">Nombre de Usuario</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Email</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for u in usuarios %}
-            <tr>
-                <td>{{u.id}}</td>
-                <td>{{u.rut}}</td>
-                <td>{{u.username}}</td>
-                <td>{{u.nombre}}</td>
-                <td>{{u.apellido}}</td>
-                <td>{{u.email}}</td>
-                <td>
-                    <a href="{% url 'editarUsuarios' u.id %}" class="btn btn-success">Editar</a>
-                    <a href="{% url 'eliminarUsuarios' u.id %}" class="btn btn-danger">Eliminar</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container bg-dark-subtle px-3 py-2 my-2">
+        <h1 class="my-2 py-2 text-center">Lista de Usuarios</h1>
+        <table class="table text-center table-striped table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">RUT</th>
+                    <th scope="col">Nombre de Usuario</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr>
+                    <td>{{u.id}}</td>
+                    <td>{{u.rut}}</td>
+                    <td>{{u.username}}</td>
+                    <td>{{u.nombre}}</td>
+                    <td>{{u.apellido}}</td>
+                    <td>{{u.email}}</td>
+                    <td>
+                        <a href="{% url 'editarUsuarios' u.id %}" class="btn btn-success">Editar</a>
+                        <a href="{% url 'eliminarUsuarios' u.id %}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}
     
