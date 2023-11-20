@@ -1,0 +1,33 @@
+{% extends 'base-admin.html' %}
+
+{% block content %}
+    <h1 class="mb-2 text-center bg-dark text-white">Lista de Usuarios</h1>
+    <table class="table text-center table-dark table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre de Usuario</th>
+                <th scope="col">Viajes</th>
+                <th scope="col">Fecha Mínima</th>
+                <th scope="col">Fecha Máxima</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in cotizaciones %}
+            <tr>
+                <td>{{c.id}}</td>
+                <td>{{c.usuario}}</td>
+                <td>{{c.viajes}}</td>
+                <td>{{c.fecha_minima}}</td>
+                <td>{{c.fecha_maxima}}</td>
+                <td>
+                    <a href="/editarCotizaciones/{{c.id}}" class="btn btn-success">Editar</a>
+                    <a href="/eliminarCotizaciones/{{c.id}}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+    

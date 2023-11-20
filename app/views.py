@@ -82,6 +82,65 @@ def inicio_sesion(request):
             error_message = "Error. Verifique que haya ingresado correctamente los datos"
             return render(request, "inicio_sesion.html", {"error_message": error_message})
 
+def listaUsuarios(request):
+    listaUsuarios = Usuario.objects.all()
+    return render(request, "listaUsuarios.html", {"usuarios": listaUsuarios})
+
+def listaDestinos(request):
+    listaDestinos = Destino.objects.all()
+    return render(request, "listaDestinos.html", {"destinos": listaDestinos})
+
+def listaViajes(request):
+    listaViajes = Viaje.objects.all()
+    return render(request, "listaViajes.html", {"viajes": listaViajes})
+
+def listaCotizaciones(request):
+    listaCotizaciones = Cotizacion.objects.all()
+    return render(request, "listaCotizaciones.html", {"cotizaciones": listaCotizaciones})
+
+def listaReservas(request):
+    listaReservas = Reserva.objects.all()
+    return render(request, "listaReservas.html", {"reservas": listaReservas})
+
+def editarUsuarios(request,id):
+    # Obtener la instancia del usuario que se va a editar
+    usuario = Usuario.objects.get(id=id)
+    formulario = FormUsuario(instance=usuario)
+    if formulario.is_valid():
+        print(formulario)
+        formulario.save()
+    return render(request, 'editarUsuarios.html',  {"usuario":usuario})
+
+def eliminarUsuarios(request, id):
+    usuario = Usuario.objects.get(id=id)
+    usuario.delete()
+    listaUsuarios = Usuario.objects.all()
+    return render(request, 'listaUsuarios.html', {"usuarios": listaUsuarios})
+
+def eliminarViajes(request, id):
+    viaje = Viaje.objects.get(id=id)
+    viaje.delete()
+    listaViajes = Viaje.objects.all()
+    return render(request, 'listaViajes.html', {"viajes": listaViajes})
+
+def eliminarDestinos(request, id):
+    destino = Destino.objects.get(id=id)
+    destino.delete()
+    listaDestinos = Destino.objects.all()
+    return render(request, 'listaDestinos.html', {"destinos": listaDestinos})
+
+def eliminarCotizaciones(request, id):
+    cotizacion = Cotizacion.objects.get(id=id)
+    cotizacion.delete()
+    listaCotizaciones = Cotizacion.objects.all()
+    return render(request, 'listaCotizaciones.html', {"cotizaciones": listaCotizaciones})
+
+def eliminarReservas(request, id):
+    reserva = Reserva.objects.get(id=id)
+    reserva.delete()
+    listaReservas = Reserva.objects.all()
+    return render(request, 'listaReservas.html', {"reservas": listaReservas})
+
 def viajes_reservados(request, id):
     # Obtengo la fila de la tabla Viaje, 
     # que contenga el id del viaje seleccionado.

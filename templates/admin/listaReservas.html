@@ -1,0 +1,33 @@
+{% extends 'base-admin.html' %}
+
+{% block content %}
+    <h1 class="mb-2 text-center bg-dark text-white">Lista de Reservas</h1>
+    <table class="table text-center table-dark table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Viaje</th>
+                <th scope="col">Fecha Ida</th>
+                <th scope="col">Fecha Regreso</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reservas %}
+            <tr>
+                <td>{{r.id}}</td>
+                <td>{{r.usuario}}</td>
+                <td>{{r.viaje}}</td>
+                <td>{{r.fecha_ida}}</td>
+                <td>{{r.fecha_vuelta}}</td>
+                <td>
+                    <a href="/editarReservas/{{r.id}}" class="btn btn-success">Editar</a>
+                    <a href="/eliminarReservas/{{r.id}}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+    

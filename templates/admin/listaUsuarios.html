@@ -1,22 +1,35 @@
 {% extends 'base-admin.html' %}
 
 {% block content %}
-    <h1 class="h1 bg-light text-center p-3">Lista de Usuarios</h1>
-    <div class="container">
-        <div class="card mb-3">
-            <div class="card-body">
-                <form action="{% url 'formUsuarioUsername' %}" method="post">
-                    {% csrf_token %}
-                        {{ form.errors }}
-                        {% for field in form %}
-                            {{ field.label_tag }} {{ field }}
-                        {% endfor %}
-                        <a href="{% url 'editarUsuarios' id=form.instance.id %}">
-                            <div class="row mx-5"><button type="submit" class="btn btn-outline-dark">Editar</button></div>
-                        </a>
-                </form>   
-            </div>
-        </div>
-    </div>
+    <h1 class="mb-2 text-center bg-dark text-white">Lista de Usuarios</h1>
+    <table class="table text-center table-dark table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">RUT</th>
+                <th scope="col">Nombre de Usuario</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Email</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in usuarios %}
+            <tr>
+                <td>{{u.id}}</td>
+                <td>{{u.rut}}</td>
+                <td>{{u.username}}</td>
+                <td>{{u.nombre}}</td>
+                <td>{{u.apellido}}</td>
+                <td>{{u.email}}</td>
+                <td>
+                    <a href="{% url 'editarUsuarios' u.id %}" class="btn btn-success">Editar</a>
+                    <a href="{% url 'eliminarUsuarios' u.id %}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}
     

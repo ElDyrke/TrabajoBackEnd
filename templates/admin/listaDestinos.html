@@ -1,0 +1,29 @@
+{% extends 'base-admin.html' %}
+
+{% block content %}
+    <h1 class="mb-2 text-center bg-dark text-white">Lista de Usuarios</h1>
+    <table class="table text-center table-dark table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre Destino</th>
+                <th scope="col">Página Web</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in destinos %}
+            <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.nombre}}</td>
+                <td>{{d.html_src}}</td>
+                <td>
+                    <a href="/editarDestinos/{{d.id}}" class="btn btn-success">Editar</a>
+                    <a href="/eliminarDestinos/{{d.id}}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+    

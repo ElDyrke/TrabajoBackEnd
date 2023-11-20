@@ -1,0 +1,35 @@
+{% extends 'base-admin.html' %}
+
+{% block content %}
+    <h1 class="mb-2 text-center bg-dark text-white">Lista de Viajes</h1>
+    <table class="table text-center table-dark table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Destino</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in viajes %}
+            <tr>
+                <td>{{v.id}}</td>
+                <td>{{v.titulo}}</td>
+                <td>{{v.descripcion}}</td>
+                <td>{{v.stock}}</td>
+                <td>{{v.precio}}</td>
+                <td>{{v.destino}}</td>
+                <td>
+                    <a href="/editarViajes/{{v.id}}" class="btn btn-success">Editar</a>
+                    <a href="/eliminarViajes/{{v.id}}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+    
