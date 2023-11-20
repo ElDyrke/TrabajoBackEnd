@@ -97,6 +97,8 @@ def listaViajes(request):
 
 def listaCotizaciones(request):
     listaCotizaciones = Cotizacion.objects.all()
+    for c in listaCotizaciones:
+        c.listav = c.viajes.all()
     return render(request, "listaCotizaciones.html", {"cotizaciones": listaCotizaciones})
 
 def listaReservas(request):
@@ -186,8 +188,7 @@ def eliminarDestinos(request, id):
 def eliminarCotizaciones(request, id):
     cotizacion = Cotizacion.objects.get(id=id)
     cotizacion.delete()
-    listaCotizaciones = Cotizacion.objects.all()
-    return render(request, 'listaCotizaciones.html', {"cotizaciones": listaCotizaciones})
+    return redirect('listaCotizaciones')
 
 def eliminarReservas(request, id):
     reserva = Reserva.objects.get(id=id)
@@ -249,28 +250,28 @@ def add_to_cotizacion(request,id):
     return redirect('inicio')
     
 def usuario_cotizar(request):
+    viajes = []
+    for id_viaje in request.session["viajes"]:
+        viaje = Viaje.objects.get(id = id_viaje)
+        viajes.append(viaje)
+    
     if request.method == "GET":
         sesion = request.session
         if "username" not in sesion:
             return redirect('inicio_sesion')
-        
-        viajes = []
-        for id_viaje in request.session["viajes"]:
-            viaje = Viaje.objects.get(id = id_viaje)
-            viajes.append(viaje)
-
         context = {"viajes": viajes}
+        
         return render(request, 'usuario_cotizar.html', context)
     
     elif request.method == "POST":
         sesion = request.session
-        viajes = sesion["viajes"]
         usuario = Usuario.objects.get(username = sesion["username"])
         fecha_min = request.POST["fecha_min"]
         fecha_max = request.POST["fecha_max"]
 
         if fecha_min > fecha_max:
-            return render(request, 'usuario_cotizar.html', {"error": "La fecha Minima no puede ser Mayor a la Máxima"})
+            context =  {"viajes": viajes, "error": "La fecha Minima no puede ser Mayor a la Máxima"}
+            return render(request, 'usuario_cotizar.html', context)
         
         cotizacion = Cotizacion(usuario=usuario,
                                 fecha_minima=fecha_min,
@@ -278,6 +279,7 @@ def usuario_cotizar(request):
         cotizacion.save()
         for v in viajes:
             cotizacion.viajes.add(v)
+        print(cotizacion.viajes)
         cotizacion.save()
         del sesion["viajes"]
         return redirect('inicio')
