@@ -137,25 +137,18 @@ def eliminarCotizaciones(request, id):
 
 def eliminarReservas(request, id):
     reserva = Reserva.objects.get(id=id)
+    viaje = Reserva.viaje
+    viaje.stock += 1
+    viaje.save()
     reserva.delete()
     listaReservas = Reserva.objects.all()
     return render(request, 'listaReservas.html', {"reservas": listaReservas})
 
-def viajes_reservados(request, id):
-    # Obtengo la fila de la tabla Viaje, 
-    # que contenga el id del viaje seleccionado.
-    # get() solo se usa cuando se esta seguro que el dato existe. 
-    getViaje = Viaje.objects.get(id=id)
-
-    if getViaje.stock > 0:
-        # si carrito_cantidad no existe, entonces se inicia en 0
-        cantidad = request.session.get("carrito_cantidad", 0)
-        request.session["carrito_cantidad"] = cantidad + 1
-        getViaje.stock = getViaje.stock - 1; 
-        getViaje.save()
-    #aqui se retorna un render
-    return inicio(request)
-
+def viajes_reservados(request):
+    reservas = Reserva.objects.all()
+    sesion = request.session
+    reservas_usuario = [r for r in reservas if r.usuario.username == sesion["username"] ]
+    return render(request, 'viajes_reservados.html', {"reservas": reservas_usuario})
 
 def cerrar_sesion(request):
     sesion = request.session

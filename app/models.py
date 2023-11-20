@@ -39,14 +39,14 @@ class Viaje(models.Model):
 class Cotizacion(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     viajes = models.ManyToManyField(Viaje, related_name="cotizaciones")
-    fecha_minima = models.DateTimeField(auto_now=False, auto_now_add=False)
-    fecha_maxima = models.DateTimeField(auto_now=False, auto_now_add=False)
+    fecha_minima = models.DateField(auto_now=False, auto_now_add=False)
+    fecha_maxima = models.DateField(auto_now=False, auto_now_add=False)
 
 class Reserva(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     viaje = models.ForeignKey(Viaje, on_delete=models.CASCADE)
-    fecha_ida = models.DateTimeField(auto_now=False, auto_now_add=False)
-    fecha_vuelta = models.DateTimeField(auto_now=False, auto_now_add=False)   
+    fecha_ida = models.DateField(auto_now=False, auto_now_add=False)
+    fecha_vuelta = models.DateField(auto_now=False, auto_now_add=False)   
 
     def __str__(self):
-        return self.nombre 
+        return f"{self.usuario.nombre, self.viaje.titulo}"
