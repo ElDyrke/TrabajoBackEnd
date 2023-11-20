@@ -83,6 +83,7 @@ def inicio_sesion(request):
             return render(request, "inicio_sesion.html", {"error_message": error_message})
 
 def listaUsuarios(request):
+    print("lista")
     listaUsuarios = Usuario.objects.all()
     return render(request, "listaUsuarios.html", {"usuarios": listaUsuarios})
 
@@ -103,13 +104,16 @@ def listaReservas(request):
     return render(request, "listaReservas.html", {"reservas": listaReservas})
 
 def editarUsuarios(request,id):
-    # Obtener la instancia del usuario que se va a editar
     usuario = Usuario.objects.get(id=id)
-    formulario = FormUsuario(instance=usuario)
-    if formulario.is_valid():
-        print(formulario)
-        formulario.save()
-    return render(request, 'editarUsuarios.html',  {"usuario":usuario})
+    if request.method == 'GET':
+        formulario = FormUsuario(instance=usuario)
+
+        return render(request, 'editarUsuarios.html',  {"form":formulario, "id": id})
+    elif request.method == 'POST':
+        formulario = FormUsuario(request.POST, instance=usuario)
+        if formulario.is_valid():
+            formulario.save()
+        return redirect('listaUsuarios')
 
 def eliminarUsuarios(request, id):
     usuario = Usuario.objects.get(id=id)
@@ -315,20 +319,3 @@ def formUsuarioUsername(request):
 # Aun no puedo hacer que funcione.
 # primero deberia mostrar la pagina listaUsuarios.html
 # y luego renderizar hacia editarUsuarios.html con el id del cliente.
-def editarUsuarios(request,id):
-    # Obtener la instancia del usuario que se va a editar
-    usuario = Usuario.objects.get(pk=id)
-
-    if request.method == 'POST':
-        formulario = FormUsuario(request.POST, instance=usuario)
-        formulario.tipo_usuario_id = 1
-        if formulario.is_valid():
-            print(formulario)
-            formulario.save()
-            return render(request, 'editarUsuarios.html', {"form": formulario})
-    else:
-        # Si la solicitud no es POST, se mostrara el formulario con los datos actuales del usuario
-        # instance sirve para mostrar los datos del usuario ya almacenados
-        formulario = FormUsuario(instance=usuario)
-
-    return render(request, 'editarUsuarios.html', {'formulario': formulario, 'usuario': usuario})

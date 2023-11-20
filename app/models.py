@@ -8,7 +8,7 @@ class TipoUsuario(models.Model):
         return self.nombre
 
 class Usuario(models.Model):
-    username = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, unique=True)
     nombre = models.CharField(max_length=50)
     rut = models.CharField(max_length=10)
     apellido = models.CharField(max_length=50)

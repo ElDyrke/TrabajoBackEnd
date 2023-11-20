@@ -17,6 +17,7 @@ urlpatterns = [
     path('cerrar/', views.cerrar_sesion, name="cerrar"),
     path('viajes_reservados/', views.viajes_reservados, name="viajes_reservados"),
     path('editarUsuarios/<int:id>', views.editarUsuarios, name="editarUsuarios"),
+    path('editarUsuarios/', views.editarUsuarios, name="editarUsuarios"),
     path('eliminarUsuarios/<int:id>', views.eliminarUsuarios, name="eliminarUsuarios"),
     path('listaUsuarios/', views.listaUsuarios, name="listaUsuarios"),
     path('listaDestinos/', views.listaDestinos, name="listaDestinos"),
