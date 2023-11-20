@@ -271,7 +271,11 @@ def formreservas(request):
         return render(request, 'agregarReserva.html', {"form": form})
     elif request.method == "POST":
         form = FormReserva(request.POST)
+        
         if form.is_valid():
+            viaje = form.cleaned_data["viaje"]
+            viaje.stock -= 1
+            viaje.save()
             form.save()
         return render(request, 'agregarReserva.html', {"form": form})
 
