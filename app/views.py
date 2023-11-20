@@ -138,8 +138,6 @@ def add_to_cotizacion(request,id):
     except KeyError:
         request.session["viajes"] = [viaje]
 
-    print(request.session["viajes"])
-
     return redirect('inicio')
     
 def usuario_cotizar(request):
