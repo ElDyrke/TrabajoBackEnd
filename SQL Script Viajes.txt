@@ -7,6 +7,12 @@ VALUES
     ('Pucón', 'https://www.visitpucon.com/');
 
 
+INSERT INTO app_tipousuario(nombre) 
+VALUES
+    ('Cliente'),
+    ('Administrador');
+
+    
 INSERT INTO app_Viaje (titulo, descripcion, stock, precio, destino_id)
 VALUES 
     ('Viaje 1', 'Descripcion 1', 20, 500, 1),
@@ -19,3 +25,5 @@ VALUES
     ('Viaje 8', 'Descripcion 8', 7, 1500, 3),
     ('Viaje 9', 'Descripcion 9', 14, 1100, 3),
     ('Viaje 10', 'Descripcion 10', 10, 1300, 1);
+
+

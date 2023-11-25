@@ -48,7 +48,8 @@ def registro_usuario(request):
             return render(request, 'registro_usuario.html', {"error": 'Error en el formulario. Verifica los datos ingresados.'})
 
 def autenticar(usuario, rol, pswrd):
-    return usuario and usuario.tipo_usuario and usuario.tipo_usuario.nombre == rol and check_password(pswrd,usuario.contrasenna)
+    print("El tipo de usuario ingresado es:",usuario.tipo_usuario.nombre)
+    return usuario and usuario.tipo_usuario.nombre == rol and check_password(pswrd,usuario.contrasenna)
 
 def inicio_sesion(request):
     if request.method == "GET":
@@ -60,9 +61,8 @@ def inicio_sesion(request):
         #si con filter no se encuentra el username ni contrasena buscada, entonces devuelve None.
         usuario = Usuario.objects.filter(username=getUsername).first()
 
-        print(autenticar(usuario, "Cliente", getContrasenna))
         if usuario is not None:
-            if autenticar(usuario, "Usuario", getContrasenna):
+            if autenticar(usuario, "Cliente", getContrasenna):
 
                 request.session["username"] = getUsername
                 print(f"El usuario {getUsername} ha iniciado sesión.")
@@ -109,7 +109,6 @@ def editarUsuarios(request,id):
     usuario = Usuario.objects.get(id=id)
     if request.method == 'GET':
         formulario = FormUsuario(instance=usuario)
-
         return render(request, 'editarUsuarios.html',  {"form":formulario, "id": id})
     elif request.method == 'POST':
         formulario = FormUsuario(request.POST, instance=usuario)
@@ -192,7 +191,7 @@ def eliminarCotizaciones(request, id):
 
 def eliminarReservas(request, id):
     reserva = Reserva.objects.get(id=id)
-    viaje = Reserva.viaje
+    viaje = reserva.viaje
     viaje.stock += 1
     viaje.save()
     reserva.delete()
@@ -297,7 +296,10 @@ def formusuarios(request):
         form = FormUsuario(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, 'agregarUsuarios.html', {"form": form})
+            messages.success(request, 'Usuario agregado correctamente.')
+            return render(request, 'agregarUsuarios.html', {"form": form, 'usuario':'Usuario agregado correctamente.'})
+        else:
+            return render(request, 'agregarUsuarios.html', {"form": form})
 
 
 def formdestinos(request):
@@ -308,7 +310,8 @@ def formdestinos(request):
         form = FormDestino(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, 'agregarDestino.html', {"form": form})
+        messages.success(request, 'Destino agregado correctamente.')
+        return render(request, 'agregarDestino.html', {"form": form, 'destino':'Destino agregado correctamente.'})
 
 
 def formviajes(request):
@@ -319,7 +322,8 @@ def formviajes(request):
         form = FormViaje(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, 'agregarViaje.html', {"form": form})
+        messages.success(request, 'Viaje agregado correctamente.')
+        return render(request, 'agregarViaje.html', {"form": form, 'viaje':'Viaje agregado correctamente.'})
 
 def formreservas(request):
     if request.method == "GET":
@@ -333,7 +337,8 @@ def formreservas(request):
             viaje.stock -= 1
             viaje.save()
             form.save()
-        return render(request, 'agregarReserva.html', {"form": form})
+        messages.success(request, 'Reserva agregada correctamente.')
+        return render(request, 'agregarReserva.html', {"form": form, 'reserva':'Reserva agregada correctamente.'})
 
 def formcotizaciones(request):
     if request.method == "GET":
@@ -343,7 +348,11 @@ def formcotizaciones(request):
         form = FormCotizacion(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, 'agregarCotizacion.html', {"form": form})
+            messages.success(request, 'Cotizacion agregada correctamente.')
+            return render(request, 'agregarCotizacion.html', {"form": form, 'cotizacion':'Cotizacion agregada correctamente.'})
+        else:
+            return render(request, 'agregarCotizacion.html', {"form": form})
+
 
 
 def formUsuarioUsername(request):
@@ -357,17 +366,5 @@ def formUsuarioUsername(request):
         return render(request, 'listaUsuarios.html', {"form": form})
 
 
-'''  
-# user_passes_test deberia servir para que solo los administradores puedan acceder a la pagina
-# pero aun no puedo hacer que funcione
-@user_passes_test(es_administrador, login_url='/inicio_sesion/')    
-@never_cache
-'''  
 
-
-# La idea que tenia era mostrar una lista de usuarios para luego editar sus datos
-# pero manteniendo sus datos actuales, en caso de que no quiera modificarlos.
 # instance sirve para mostrar los datos del usuario ya almacenados
-# Aun no puedo hacer que funcione.
-# primero deberia mostrar la pagina listaUsuarios.html
-# y luego renderizar hacia editarUsuarios.html con el id del cliente.

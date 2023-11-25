@@ -13,7 +13,7 @@ class Usuario(models.Model):
     rut = models.CharField(max_length=10)
     apellido = models.CharField(max_length=50)
     contrasenna = models.CharField(max_length=100)
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=254, unique=True)
     tipo_usuario = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
 
     def __str__(self):
